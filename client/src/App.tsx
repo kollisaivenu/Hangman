@@ -1,18 +1,18 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import './App.css'
-import NameForm from "./NameForm.tsx";
-import GameForm from "./GameForm.tsx";
-import GuessForm from "./GuessForm.tsx";
-import PuzzleForm from "./PuzzleForm.tsx";
+import NamePage from "./Components/Pages/NamePage.tsx";
+import GamePage from "./Components/Pages/GamePage.tsx";
+import GuessPage from "./Components/Pages/GuessPage.tsx";
+import PuzzlePage from "./Components/Pages/PuzzlePage.tsx";
 function App() {
 
   return (
       <Router>
           <Routes>
-              <Route path="/" element={<NameForm />} />
-              <Route path="/game" element={<GameForm />} />
-              <Route path="/guesser" element={<GuessForm/>} />
-              <Route path="/riddler" element={<PuzzleForm/>} />
+              <Route path="/" element={<NamePage />} />
+              <Route path="/game" element={<GamePage />} />
+              <Route path="/guesser" element={<GuessPage />} />
+              <Route path="/riddler" element={<PuzzlePage />} />
           </Routes>
       </Router>
   )

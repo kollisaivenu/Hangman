@@ -1,11 +1,13 @@
 import {useState, type ChangeEvent, type FormEvent, useEffect} from 'react';
 import axios from "axios";
-import {socket} from "./socket.tsx";
+import {socket} from "../../socket.tsx";
+import Form from "../Forms/Form.tsx";
+import H1 from "../TextFields/H1.tsx";
 
-function PuzzleForm (){
+function PuzzlePage (){
     const [puzzle, setPuzzle] = useState<string>('');
     const [status, setStatus] = useState<string>('');
-    const gameName = sessionStorage.getItem("gameName");
+    const gameName = sessionStorage.getItem("gameName") || "Undefined Game" ;
 
     useEffect(() => {
         const onConnect = () => {socket.emit('send socket id for riddler', {gameName: sessionStorage.getItem("gameName"), id: socket.id})};
@@ -43,21 +45,16 @@ function PuzzleForm (){
 
     return (
         <div>
-            <h1>{gameName}</h1>
-            <h1>{status}</h1>
-            <form onSubmit={handleSubmit}>
-                <label htmlFor="myInput">Enter word to guess:</label>
-                <input
-                    type="text"
-                    id="myInput"
-                    value={puzzle}
-                    onChange={handleChange}
-                />
-                <button type="submit">Submit</button>
-            </form>
+            <H1 text={gameName} ></H1>
+            <H1 text={status}></H1>
+            <Form inputLabelText="Enter Puzzle"
+                  submitButtonText="Send"
+                  inputFieldValue={puzzle}
+                  handleFormSubmit={handleSubmit}
+                  handleInputChange={handleChange}></Form>
         </div>
     );
-};
+}
 
-export default PuzzleForm;
+export default PuzzlePage;
 

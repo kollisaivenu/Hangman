@@ -1,12 +1,14 @@
-import {useState, type FormEvent, useEffect} from 'react';
-import {socket} from './socket';
+import {useState, type FormEvent, useEffect, type ChangeEvent} from 'react';
+import {socket} from "../../socket.tsx";
+import Form from "../Forms/Form.tsx";
+import H1 from "../TextFields/H1.tsx";
 import axios from "axios";
 
-function GuessForm() {
+function GuessPage() {
     const [guess, setGuess] = useState<string>('');
     const [gameState, setGameState] = useState<string>('');
     const [message, setMessage] = useState<string>('');
-    const gameName = sessionStorage.getItem("gameName");
+    const gameName = sessionStorage.getItem("gameName") || "undefined game";
 
     useEffect(() => {
         const onConnect = () => {socket.emit('send socket id for guesser', {gameName: gameName, id:socket.id})};
@@ -34,23 +36,20 @@ function GuessForm() {
             console.error('Error submitting form:', error);
         }
     }
-    return (<div>
-        <h2>{gameName}</h2>
-        <h2>{gameState}</h2>
-        <h2>{message}</h2>
 
-        <form onSubmit={handleSubmit}>
-            <label htmlFor="userInput">Guess:</label>
-            <input
-                type="text"
-                id="userInput"
-                name="userInput"
-                value={guess}
-                onChange={(e) => setGuess(e.target.value)}
-            />
-            <button type="submit">Submit</button>
-        </form>
-    </div>);
+    const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+        setGuess(e.target.value);
+    }
+    return (<div>
+                <H1 text={gameName}></H1>
+                <H1 text={gameState}></H1>
+                <H1 text={message}></H1>
+                <Form inputLabelText="Enter Guess"
+                      submitButtonText="Send"
+                      inputFieldValue={guess}
+                      handleFormSubmit={handleSubmit}
+                      handleInputChange={handleChange}></Form>
+            </div>);
 };
 
-export default GuessForm;
+export default GuessPage;
