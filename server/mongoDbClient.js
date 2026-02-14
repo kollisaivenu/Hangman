@@ -5,7 +5,7 @@ class MongoDbClient {
     async init() {
         const username = process.env.MONGO_USERNAME;
         const password = process.env.MONGO_PASSWORD;
-        const url = `mongodb+srv://${username}:${password}@hangman-cluster.4t3t4b5.mongodb.net/?retryWrites=true&w=majority&appName=hangman-cluster`
+        const url = `mongodb+srv://${username}:${password}@hangman-cluster.4t3t4b5.mongodb.net/?retryWrites=true&w=majority&appName=hangman-cluster&compressors=zlib`
         try {
             this.client = new MongoClient(url);
             await this.client.connect();
